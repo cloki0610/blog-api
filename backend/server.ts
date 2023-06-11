@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import errorHandler from "./middleware/error";
 import connectDb from "./config/db";
 
@@ -20,7 +20,10 @@ app.use((_, res, next) => {
 
 app.use("/api/post", require("./routes/post"));
 app.use("/api/auth", require("./routes/auth"));
-
+app.use("*", (req: Request, res: Response, next: NextFunction) => {
+    res.status(404);
+    throw new Error("Endpoint not found!");
+});
 app.use(errorHandler);
 
 connectDb()

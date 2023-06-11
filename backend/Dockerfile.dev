@@ -14,7 +14,8 @@ ENV MONGODB_USERNAME=root
 ENV MONGODB_PASSWORD=secret
 ENV NODE_ENV=development
 ENV PORT=8080
-ENV JWTSECRET=somesupersecretsecret
+ENV LOGINSECRET=somesupersecretsecret
+ENV REFRESHSECRET=anothersupersecretsecret
 
 EXPOSE 8080
 
