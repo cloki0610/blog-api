@@ -5,10 +5,9 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
-
-COPY . .
-
 RUN npm build
+
+COPY ./build .
 
 ENV MONGODB_USERNAME=root
 ENV MONGODB_PASSWORD=secret

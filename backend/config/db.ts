@@ -2,9 +2,12 @@ import mongoose from "mongoose";
 
 const connectDb = async () => {
     try {
-        const conn = await mongoose.connect(
-            `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@mongodb:27017/blog-api?authSource=admin`
-        ); // Some option default as true after mongoose 6
+        const db =
+            process.env.NODE_ENV == "development" ? "localhost" : "mongo";
+        const conn = await mongoose.connect(`mongodb://${db}:27017/blog-api`); // Some option default as true after mongoose 6
+        mongoose.connection.on("error", (error: Error) =>
+            console.log("Database connection error.", error)
+        );
         console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error: any) {
         console.error(error);

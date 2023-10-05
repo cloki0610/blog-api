@@ -41,4 +41,4 @@ router.get("/status", isAuth, authController.getStatus);
 
 router.get("/refresh", authController.refreshToken);
 
-export default router;
+export const AuthRouter = (): express.Router => router;

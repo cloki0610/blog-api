@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User, { IUser } from "../models/user";
 import type { ValidError } from "../middleware/error";
-import type { TokenRequest } from "../middleware/is-auth";
+import type { TokenRequest, docodedPayload } from "../middleware/is-auth";
 
 // @desc Register a new user
 // @route POST /api/auth/new
@@ -54,9 +54,7 @@ export const login = asyncHandler(
             throw error;
         }
         try {
-            const user: IUser = await User.findOne({ email }).select(
-                "+password"
-            );
+            const user = await User.findOne({ email }).select("+password");
             if (!user) {
                 res.status(401);
                 throw new Error("User not found.");
@@ -128,7 +126,7 @@ export const refreshToken = asyncHandler(
             res.status(500);
             throw err;
         }
-        const user: IUser = await User.findOne({ email: decodedToken.email });
+        const user = await User.findOne({ email: decodedToken.email });
         if (decodedToken && user) {
             const token = jwt.sign(
                 { email: user.email, userId: user._id.toString() },

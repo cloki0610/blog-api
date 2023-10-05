@@ -5,7 +5,7 @@ export interface TokenRequest extends Request {
   userId?: string;
 }
 
-interface docodedPayload extends jwt.JwtPayload {
+export interface docodedPayload extends jwt.JwtPayload {
   userId: string;
 }
 
